@@ -5,7 +5,7 @@ public class update {
 public void update(String aajquery){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection aajcon=DriverManager.getConnection("jdbc:mysql://localhost/aajhospital", "root", "");
+            Connection aajcon=DriverManager.getConnection("jdbc:mysql://localhost/compras", "root", "");
 
        
             PreparedStatement aajstmt = aajcon.prepareStatement(aajquery);

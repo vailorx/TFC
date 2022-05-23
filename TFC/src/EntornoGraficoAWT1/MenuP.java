@@ -4,15 +4,15 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
-import java.awt.BorderLayout;
-import javax.swing.JToolBar;
+
+
 
 import sql.eliminar;
 import sql.introducir;
 import sql.update;
-import sql.visualizar;
 
-import javax.swing.JLayeredPane;
+
+
 import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JButton;
@@ -21,35 +21,25 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.sql.Statement;
-import java.util.ArrayList;
+
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.ImageIcon;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
 
-import otros.jtable;
+import javax.swing.ImageIcon;
+
+
 
 import java.awt.SystemColor;
-import javax.swing.AbstractAction;
+
 import java.awt.event.ActionEvent;
-import javax.swing.Action;
+
 import java.awt.event.ActionListener;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+
 
 public class MenuP {
 
@@ -58,10 +48,16 @@ public class MenuP {
 	private JTextField tf2;
 	private JTextField tf3;
 	private JTextField tf4;
-	private final Action action = new SwingAction();
+
 	private JTextField tf5;
 	private JTextField consulta1;
-	private JTable table;
+
+	private JTextField consulta2;
+	private JTextField consulta3;
+	private JTextField consulta4;
+	private JTextField Teliminar;
+	private JTextField textField;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -93,8 +89,8 @@ public class MenuP {
 		introducir ob2 = new introducir();
 		update ob1 = new update();
 		eliminar ob3 = new eliminar();
-		visualizar ob4 = new visualizar();
-		jtable ob5 = new jtable();
+
+	
 		frame = new JFrame();
 		frame.setBounds(100, 100, 651, 528);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -229,13 +225,12 @@ public class MenuP {
 		Reiniciar1.setBounds(209, 275, 89, 23);
 		panel_1.add(Reiniciar1);
 		
-		JList list = new JList();
-		list.setBounds(394, 279, 174, -234);
-		panel_1.add(list);
+		
 		
 		JTextArea txtrHola = new JTextArea();
+		txtrHola.setEnabled(false);
 		
-		txtrHola.setFont(new Font("Monospaced", Font.PLAIN, 16));
+		txtrHola.setFont(new Font("Monospaced", Font.BOLD, 16));
 		txtrHola.setColumns(1);
 		txtrHola.setBounds(347, 23, 247, 242);
 		panel_1.add(txtrHola);
@@ -258,22 +253,7 @@ public class MenuP {
 		panel_1.add(lblPrecioUnitario);
 		
 		tf5 = new JTextField();
-		tf5.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				if(tf5.getText() != "") {
-				String x = tf3.getText();
-				int cantidad = Integer.parseInt(x);
-				String y = tf5.getText();
-				int precio = Integer.parseInt(y);
-				int total = precio * cantidad;
-				String totalt = total + "€";
-				PrecioT.setText(totalt);
-			}else {
-				PrecioT.setText("0€");
-			}
-			} 
-		});
+		
 		
 		tf5.setColumns(10);
 		tf5.setBounds(114, 152, 174, 20);
@@ -283,6 +263,23 @@ public class MenuP {
 		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\alvro\\Downloads\\carrito-de-supermercado (1).png"));
 		lblNewLabel.setBounds(238, 314, 148, 119);
 		panel_1.add(lblNewLabel);
+		PrecioT.setText("0€");
+		JButton btnNewButton_2 = new JButton("Calcular");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PrecioT.setText("");
+				String x = tf3.getText();
+				String y = tf5.getText();
+				int x1 = Integer.parseInt(x);
+				int y1 = Integer.parseInt(y);
+				int suma = x1 * y1;
+				String Sumat = suma + "€";
+				PrecioT.setText(Sumat);
+				
+			}
+		});
+		btnNewButton_2.setBounds(127, 243, 89, 23);
+		panel_1.add(btnNewButton_2);
 		
 	
 		try {
@@ -298,7 +295,6 @@ public class MenuP {
 			while(rs.next()) {
 				String nom = rs.getString(1);
 				int id = rs.getInt(2);
-				String tiend = rs.getString(3);
 				int preci = rs.getInt(4);
 			 txtrHola.append(nom + "\t" + id + "\t" +  preci+ "€" + "\n");
 				
@@ -317,82 +313,551 @@ public class MenuP {
 		tabbedPane.addTab("Empleados", null, panel_2, null);
 		panel_2.setLayout(null);
 		
-		JLabel lblNewLabel_4 = new JLabel("Consulta");
-		lblNewLabel_4.setBounds(49, 11, 46, 14);
+		JLabel lblNewLabel_4 = new JLabel("Nombre:");
+		lblNewLabel_4.setBounds(10, 11, 50, 14);
 		panel_2.add(lblNewLabel_4);
 		
 		consulta1 = new JTextField();
-		consulta1.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				String s = consulta1.getText();
-				 try 
-				  {
-				      String url = "jdbc:mysql://localhost:3306/compras";
-				      String user = "root";
-				      String password = "";
-				    
-				      Connection con = DriverManager.getConnection(url, user, password);
-				    
-				      String query = s + ";";
-				    
-				      Statement stm = con.createStatement();
-				      ResultSet res = stm.executeQuery(query);
-				    
-				      String columns[] = { "Nombre", "DNI", "Apellido", "Dpto", "Tlf" };
-				      String data[][] = new String[8][5];
-				    
-				      int i = 0;
-				      while (res.next()) {
-				        String Nombre = res.getString("Nombre");
-				        String DNI = res.getString("DNI");
-				        String Apellido = res.getString("Apellido");
-				        String Dpto = res.getString("Dpto");
-				        int tlf = res.getInt("tlf");
-				        data[i][0] = Nombre;
-				        data[i][1] = DNI;
-				        data[i][2] = Apellido;
-				        data[i][3] = Dpto;
-				        data[i][4] = tlf + "";
-				        
-				        i++;
-				      }
-				      DefaultTableModel model = new DefaultTableModel(data, columns);
-						table = new JTable(model);
-						table.setBounds(63, 51, 481, 380);
-						table.setShowGrid(true);
-					      table.setShowVerticalLines(true);
-					      
-						panel_2.add(table);
-						
-				  } catch(SQLException e1) {
-				      e1.printStackTrace();
-				    }
-				 
-			}
-		});
 		
 		
-		consulta1.setBounds(128, 8, 385, 20);
+		
+		consulta1.setBounds(70, 8, 152, 20);
 		panel_2.add(consulta1);
 		consulta1.setColumns(10);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 107, 610, 281);
+		panel_2.add(scrollPane);
+		
+		JTextArea txtrHola_1 = new JTextArea();
+		scrollPane.setViewportView(txtrHola_1);
+		txtrHola_1.setText("");
+		txtrHola_1.setFont(new Font("Monospaced", Font.BOLD, 16));
+		txtrHola_1.setColumns(1);
+		txtrHola_1.setEnabled(false);
+		
+		JButton Buscar1 = new JButton("Buscar");
+		Buscar1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtrHola_1.setText("");
+				String x = consulta1.getText();
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection aajcon = DriverManager.getConnection
+							("jdbc:mysql://localhost:3306/compras","root","");
+					
+					String sql = "Select * from empleados where nombre = " + "'" + x + "'"  + ";";
+					Statement stm = aajcon.createStatement();
+					ResultSet rs = stm.executeQuery(sql);
+					while(rs.next()) {
+						String nom = rs.getString(1);
+						String DNI = rs.getString(2);
+						String Apellido = rs.getString(3);
+						String Dpto = rs.getString(4);
+						int tlf = rs.getInt(5);
+					 txtrHola_1.append(nom + "\t" + DNI + "\t" +  Apellido+ "\t" + Dpto + "\t" + tlf + "" + "\n");
+						
+					}
+					
+					
+					
+					aajcon.close();
+					
+				}catch(Exception e1) {
+					System.out.println(e1);
+				}
+			}
+		});
+		Buscar1.setBounds(232, 7, 89, 23);
+		panel_2.add(Buscar1);
+		
+		consulta2 = new JTextField();
+		consulta2.setColumns(10);
+		consulta2.setBounds(70, 38, 152, 20);
+		panel_2.add(consulta2);
+		
+		JLabel lblNewLabel_4_1 = new JLabel("Apellido:");
+		lblNewLabel_4_1.setBounds(10, 41, 50, 14);
+		panel_2.add(lblNewLabel_4_1);
+		
+		JButton Buscar1_1 = new JButton("Buscar");
+		Buscar1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtrHola_1.setText("");
+				String x = consulta2.getText();
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection aajcon = DriverManager.getConnection
+							("jdbc:mysql://localhost:3306/compras","root","");
+					
+					String sql = "Select * from empleados where Apellido = " + "'" + x + "'"  + ";";
+					Statement stm = aajcon.createStatement();
+					ResultSet rs = stm.executeQuery(sql);
+					while(rs.next()) {
+						String nom = rs.getString(1);
+						String DNI = rs.getString(2);
+						String Apellido = rs.getString(3);
+						String Dpto = rs.getString(4);
+						int tlf = rs.getInt(5);
+					 txtrHola_1.append(nom + "\t" + DNI + "\t" +  Apellido+ "\t" + Dpto + "\t" + tlf + "" + "\n");
+						
+					}
+					
+					
+					
+					aajcon.close();
+					
+				}catch(Exception e1) {
+					System.out.println(e1);
+				}
+			
+				
+			}
+		});
+		Buscar1_1.setBounds(232, 37, 89, 23);
+		panel_2.add(Buscar1_1);
+		
+		JLabel lblNewLabel_4_2 = new JLabel("Dpto:");
+		lblNewLabel_4_2.setBounds(331, 11, 46, 14);
+		panel_2.add(lblNewLabel_4_2);
+		
+		JLabel lblNewLabel_4_3 = new JLabel("Tlf:");
+		lblNewLabel_4_3.setBounds(331, 41, 46, 14);
+		panel_2.add(lblNewLabel_4_3);
+		
+		consulta3 = new JTextField();
+		consulta3.setColumns(10);
+		consulta3.setBounds(380, 8, 152, 20);
+		panel_2.add(consulta3);
+		
+		consulta4 = new JTextField();
+		consulta4.setColumns(10);
+		consulta4.setBounds(380, 38, 152, 20);
+		panel_2.add(consulta4);
+		
+		JButton Buscar1_2 = new JButton("Buscar");
+		Buscar1_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtrHola_1.setText("");
+				String x = consulta3.getText();
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection aajcon = DriverManager.getConnection
+							("jdbc:mysql://localhost:3306/compras","root","");
+					
+					String sql = "Select * from empleados where Dpto = " + "'" + x + "'"  + ";";
+					Statement stm = aajcon.createStatement();
+					ResultSet rs = stm.executeQuery(sql);
+					while(rs.next()) {
+						String nom = rs.getString(1);
+						String DNI = rs.getString(2);
+						String Apellido = rs.getString(3);
+						String Dpto = rs.getString(4);
+						int tlf = rs.getInt(5);
+					 txtrHola_1.append(nom + "\t" + DNI + "\t" +  Apellido+ "\t" + Dpto + "\t" + tlf + "" + "\n");
+						
+					}
+					
+					
+					
+					aajcon.close();
+					
+				}catch(Exception e1) {
+					System.out.println(e1);
+				}
+			
+				
+			
+				
+			}
+		});
+		Buscar1_2.setBounds(541, 7, 89, 23);
+		panel_2.add(Buscar1_2);
+		
+		JButton Buscar1_3 = new JButton("Buscar");
+		Buscar1_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtrHola_1.setText("");
+				String x = consulta2.getText();
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection aajcon = DriverManager.getConnection
+							("jdbc:mysql://localhost:3306/compras","root","");
+					
+					String sql = "Select * from empleados where Tlf = " +  x  + ";";
+					Statement stm = aajcon.createStatement();
+					ResultSet rs = stm.executeQuery(sql);
+					while(rs.next()) {
+						String nom = rs.getString(1);
+						String DNI = rs.getString(2);
+						String Apellido = rs.getString(3);
+						String Dpto = rs.getString(4);
+						int tlf = rs.getInt(5);
+					 txtrHola_1.append(nom + "\t" + DNI + "\t" +  Apellido+ "\t" + Dpto + "\t" + tlf + "" + "\n");
+					}
+					
+					
+					
+					aajcon.close();
+					
+				}catch(Exception e1) {
+					System.out.println(e1);
+				}
+			
+				
+			
+			}
+		});
+		Buscar1_3.setBounds(542, 37, 89, 23);
+		panel_2.add(Buscar1_3);
+		
+		JButton Actualizar = new JButton("Actualizar");
+		Actualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtrHola_1.setText("");
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection aajcon = DriverManager.getConnection
+							("jdbc:mysql://localhost:3306/compras","root","");
+					
+					String sql = "Select * from empleados;";
+					Statement stm = aajcon.createStatement();
+					ResultSet rs = stm.executeQuery(sql);
+					
+					
+					while(rs.next()) {
+						String nom = rs.getString(1);
+						String DNI = rs.getString(2);
+						String Apellido = rs.getString(3);
+						String Dpto = rs.getString(4);
+						int tlf = rs.getInt(5);
+					 txtrHola_1.append(nom + "\t" + DNI + "\t" +  Apellido+ "\t" + Dpto + "\t" + tlf + "" + "\n");
+						
+					}
+					
+					
+					
+					aajcon.close();
+					
+				}catch(Exception e1) {
+					System.out.println(e1);
+				}
+				
+			}
+		});
+		Actualizar.setBounds(253, 71, 100, 23);
+		panel_2.add(Actualizar);
+		
+		JLabel lblNewLabel_4_1_1 = new JLabel("Eliminar por Nombre: ");
+		lblNewLabel_4_1_1.setBounds(10, 416, 131, 14);
+		panel_2.add(lblNewLabel_4_1_1);
+		
+		Teliminar = new JTextField();
+		Teliminar.setColumns(10);
+		Teliminar.setBounds(140, 413, 152, 20);
+		panel_2.add(Teliminar);
+		
+		JButton Borrar = new JButton("Borrar");
+		Borrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String x = Teliminar.getText();
+				ob3.eliminar(x);
+				
+			}
+		});
+		Borrar.setBounds(302, 412, 89, 23);
+		panel_2.add(Borrar);
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection aajcon = DriverManager.getConnection
+					("jdbc:mysql://localhost:3306/compras","root","");
+			
+			String sql = "Select * from empleados;";
+			Statement stm = aajcon.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			
+			while(rs.next()) {
+				String nom = rs.getString(1);
+				String DNI = rs.getString(2);
+				String Apellido = rs.getString(3);
+				String Dpto = rs.getString(4);
+				int tlf = rs.getInt(5);
+			 txtrHola_1.append(nom + "\t" + DNI + "\t" +  Apellido+ "\t" + Dpto + "\t" + tlf + "" + "\n");
+				
+			}
+			
+			
+			
+			aajcon.close();
+			
+		}catch(Exception e) {
+			System.out.println(e);
+		}
 		
 		
 		
 		JPanel panel_3 = new JPanel();
-		tabbedPane.addTab("Consulta", null, panel_3, null);
+		tabbedPane.addTab("Pendientes", null, panel_3, null);
 		panel_3.setLayout(null);
+		
+		
+
+		 
+		
+		JLabel lblNewLabel_5 = new JLabel("Cambiar estado a realizado por id:");
+		lblNewLabel_5.setFont(new Font("Verdana Pro Cond", Font.PLAIN, 20));
+		lblNewLabel_5.setBounds(10, 267, 321, 43);
+		panel_3.add(lblNewLabel_5);
+		
+		textField = new JTextField();
+		textField.setBounds(341, 282, 126, 20);
+		panel_3.add(textField);
+		textField.setColumns(10);
+		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(10, 32, 608, 224);
+		panel_3.add(scrollPane_2);
+		
+		
+	
+		JTextArea textArea = new JTextArea();
+		textArea.setFont(new Font("Monospaced", Font.BOLD, 16));
+		scrollPane_2.setViewportView(textArea);
+		textArea.setEnabled(false);
+		
+		JLabel lblNewLabel_6 = new JLabel("Nombre");
+		lblNewLabel_6.setBounds(10, 11, 50, 14);
+		panel_3.add(lblNewLabel_6);
+		
+		JLabel lblNewLabel_6_1 = new JLabel("ID");
+		lblNewLabel_6_1.setBounds(97, 11, 50, 14);
+		panel_3.add(lblNewLabel_6_1);
+		
+		JLabel lblNewLabel_6_2 = new JLabel("Tienda");
+		lblNewLabel_6_2.setBounds(183, 11, 50, 14);
+		panel_3.add(lblNewLabel_6_2);
+		
+		JLabel lblNewLabel_6_3 = new JLabel("Precio");
+		lblNewLabel_6_3.setBounds(270, 11, 50, 14);
+		panel_3.add(lblNewLabel_6_3);
+		
+		JLabel lblNewLabel_6_4 = new JLabel("Estado");
+		lblNewLabel_6_4.setBounds(375, 11, 50, 14);
+		panel_3.add(lblNewLabel_6_4);
+		
+		JLabel lblNewLabel_6_5 = new JLabel("Cantidad");
+		lblNewLabel_6_5.setBounds(444, 11, 50, 14);
+		panel_3.add(lblNewLabel_6_5);
+		
+		JButton btnNewButton = new JButton("Enviar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String x = "update compras set estado = 'Realizado' where id_producto =";
+				String y = textField.getText();
+				String z = x +  y + ";";
+				ob1.update(z);
+			}
+		});
+		btnNewButton.setBounds(501, 281, 89, 23);
+		panel_3.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Actualizar");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText("");
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection aajcon1 = DriverManager.getConnection
+							("jdbc:mysql://localhost:3306/compras","root","");
+					
+					String sql2 = "Select * from compras where estado = 'En Proceso';";
+					Statement stm3 = aajcon1.createStatement();
+					ResultSet rs = stm3.executeQuery(sql2);
+					
+					
+					while(rs.next()) {
+						String nom = rs.getString(1);
+						int id = rs.getInt(2);
+						String tiend = rs.getString(3);
+						int preci = rs.getInt(4);
+						String Estado = rs.getString(5);
+						int cantidad = rs.getInt(6);
+						textArea.append(nom + "\t" + id + "\t" +  tiend+ "\t" + preci + "€" + "\t" + Estado + "\t" + cantidad + "\n");
+						
+					}
+					
+					
+					
+					aajcon1.close();
+					
+				}catch(Exception e3) {
+					System.out.println(e3);
+				}
+				
+				
+			}
+		});
+		btnNewButton_1.setBounds(258, 376, 107, 23);
+		panel_3.add(btnNewButton_1);
+		
+		JPanel panel_3_1 = new JPanel();
+		panel_3_1.setLayout(null);
+		tabbedPane.addTab("Realizados", null, panel_3_1, null);
+		
+		JLabel lblNewLabel_5_1 = new JLabel("Cambiar estado a pendiente por id:");
+		lblNewLabel_5_1.setFont(new Font("Verdana Pro Cond", Font.PLAIN, 20));
+		lblNewLabel_5_1.setBounds(10, 267, 321, 43);
+		panel_3_1.add(lblNewLabel_5_1);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(341, 282, 126, 20);
+		panel_3_1.add(textField_1);
+		
+		JLabel lblNewLabel_6_6 = new JLabel("Nombre");
+		lblNewLabel_6_6.setBounds(10, 11, 50, 14);
+		panel_3_1.add(lblNewLabel_6_6);
+		
+		JLabel lblNewLabel_6_1_1 = new JLabel("ID");
+		lblNewLabel_6_1_1.setBounds(112, 11, 50, 14);
+		panel_3_1.add(lblNewLabel_6_1_1);
+		
+		JLabel lblNewLabel_6_2_1 = new JLabel("Tienda");
+		lblNewLabel_6_2_1.setBounds(187, 11, 50, 14);
+		panel_3_1.add(lblNewLabel_6_2_1);
+		
+		JLabel lblNewLabel_6_3_1 = new JLabel("Precio");
+		lblNewLabel_6_3_1.setBounds(315, 11, 50, 14);
+		panel_3_1.add(lblNewLabel_6_3_1);
+		
+		JLabel lblNewLabel_6_4_1 = new JLabel("Estado");
+		lblNewLabel_6_4_1.setBounds(420, 11, 50, 14);
+		panel_3_1.add(lblNewLabel_6_4_1);
+		
+		JLabel lblNewLabel_6_5_1 = new JLabel("Cantidad");
+		lblNewLabel_6_5_1.setBounds(540, 11, 50, 14);
+		panel_3_1.add(lblNewLabel_6_5_1);
+		
+		JButton enviar2 = new JButton("Enviar");
+		enviar2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String x = "update compras set estado = 'En Proceso' where id_producto = ";
+				String y = textField_1.getText();
+				String z = x +  y + ";";
+				ob1.update(z);
+			}
+		});
+		enviar2.setBounds(501, 281, 89, 23);
+		panel_3_1.add(enviar2);
 		frame.setResizable(false);
 		
 		
+		JScrollPane scrollPane_3 = new JScrollPane();
+		scrollPane_3.setBounds(10, 36, 596, 207);
+		panel_3_1.add(scrollPane_3);
+		
+		JTextArea textArea_1 = new JTextArea();
+		scrollPane_3.setViewportView(textArea_1);
+		textArea_1.setFont(new Font("Monospaced", Font.BOLD, 16));
+		textArea_1.setEnabled(false);
+		JButton btnNewButton_1_1 = new JButton("Actualizar");
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			textArea_1.setText("");
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				Connection aajcon1 = DriverManager.getConnection
+						("jdbc:mysql://localhost:3306/compras","root","");
+				
+				String sql2 = "Select * from compras where estado = 'Realizado';";
+				Statement stm3 = aajcon1.createStatement();
+				ResultSet rs = stm3.executeQuery(sql2);
+				
+				
+				while(rs.next()) {
+					String nom = rs.getString(1);
+					int id = rs.getInt(2);
+					String tiend = rs.getString(3);
+					int preci = rs.getInt(4);
+					String Estado = rs.getString(5);
+					int cantidad = rs.getInt(6);
+					textArea_1.append(nom + "\t" + id + "\t" +  tiend+ "\t" + preci + "€" + "\t" + Estado + "\t" + cantidad + "\n");
+					
+				}
+				
+				
+				
+				aajcon1.close();
+				
+			}catch(Exception e3) {
+				System.out.println(e3);
+			}
+			}
+		});
+		btnNewButton_1_1.setBounds(258, 376, 107, 23);
+		panel_3_1.add(btnNewButton_1_1);
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection aajcon1 = DriverManager.getConnection
+					("jdbc:mysql://localhost:3306/compras","root","");
+			
+			String sql2 = "Select * from compras where estado = 'En Proceso';";
+			Statement stm3 = aajcon1.createStatement();
+			ResultSet rs = stm3.executeQuery(sql2);
+			
+			
+			while(rs.next()) {
+				String nom = rs.getString(1);
+				int id = rs.getInt(2);
+				String tiend = rs.getString(3);
+				int preci = rs.getInt(4);
+				String Estado = rs.getString(5);
+				int cantidad = rs.getInt(6);
+				textArea.append(nom + "\t" + id + "\t" +  tiend+ "\t" + preci + "€" + "\t" + Estado + "\t" + cantidad + "\n");
+				
+			}
+			
+			
+			
+			aajcon1.close();
+			
+		}catch(Exception e3) {
+			System.out.println(e3);
+		}
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection aajcon1 = DriverManager.getConnection
+					("jdbc:mysql://localhost:3306/compras","root","");
+			
+			String sql2 = "Select * from compras where estado = 'Realizado';";
+			Statement stm3 = aajcon1.createStatement();
+			ResultSet rs = stm3.executeQuery(sql2);
+			
+			
+			while(rs.next()) {
+				String nom = rs.getString(1);
+				int id = rs.getInt(2);
+				String tiend = rs.getString(3);
+				int preci = rs.getInt(4);
+				String Estado = rs.getString(5);
+				int cantidad = rs.getInt(6);
+				textArea_1.append(nom + "\t" + id + "\t" +  tiend+ "\t" + preci + "€" + "\t" + Estado + "\t" + cantidad + "\n");
+				
+			}
+			
+			
+			
+			aajcon1.close();
+			
+		}catch(Exception e3) {
+			System.out.println(e3);
+		}
+		
+		
 		
 	}
-	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "SwingAction");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
+	
+
 }

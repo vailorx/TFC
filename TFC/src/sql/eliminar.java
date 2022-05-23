@@ -9,22 +9,21 @@ public class eliminar {
 	//@param asignamos los valos de tanto nuestra conexion, como el usuario que vamos utilizar y contraseña  
 
 	
-	public void eliminar(String nombre, String apellido, int edad){
+	public void eliminar(String nombre){
 
 	    try{
 	        
 	        String aajdriver = "com.mysql.cj.jdbc.Driver";
-	        String aajurl = "jdbc:mysql://localhost/aajhospital";
+	        String aajurl = "jdbc:mysql://localhost/compras";
 	        Class.forName(aajdriver);
 	        Connection aajconn = DriverManager.getConnection(aajurl, "root", "");
 
 	    
-	        String aajquery = " delete from pacientes where nombre, apellido, edad"
-	          + " values (?, ?, ?)";
+	        String aajquery = " delete from empleados where nombre"
+	          + " values (?)";
 	        PreparedStatement aajpreparedStmt = aajconn.prepareStatement(aajquery);
 	        aajpreparedStmt.setString (1, nombre);
-	        aajpreparedStmt.setString   (2, apellido);
-	        aajpreparedStmt.setInt(3, edad);
+	       
 
 	       
 	        aajpreparedStmt.execute();
