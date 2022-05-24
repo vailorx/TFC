@@ -19,10 +19,10 @@ public class eliminar {
 	        Connection aajconn = DriverManager.getConnection(aajurl, "root", "");
 
 	    
-	        String aajquery = " delete from empleados where nombre"
-	          + " values (?)";
+	        String aajquery = "delete from empleados where DNI = "
+	          + "'" + nombre + "'" + ";";
 	        PreparedStatement aajpreparedStmt = aajconn.prepareStatement(aajquery);
-	        aajpreparedStmt.setString (1, nombre);
+	        
 	       
 
 	       

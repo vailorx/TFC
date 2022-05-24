@@ -58,6 +58,7 @@ public class MenuP {
 	private JTextField Teliminar;
 	private JTextField textField;
 	private JTextField textField_1;
+	private JTextField Tdni;
 
 	/**
 	 * Launch the application.
@@ -545,10 +546,10 @@ public class MenuP {
 				
 			}
 		});
-		Actualizar.setBounds(253, 71, 100, 23);
+		Actualizar.setBounds(488, 412, 100, 23);
 		panel_2.add(Actualizar);
 		
-		JLabel lblNewLabel_4_1_1 = new JLabel("Eliminar por Nombre: ");
+		JLabel lblNewLabel_4_1_1 = new JLabel("Eliminar por DNI: ");
 		lblNewLabel_4_1_1.setBounds(10, 416, 131, 14);
 		panel_2.add(lblNewLabel_4_1_1);
 		
@@ -567,6 +568,53 @@ public class MenuP {
 		});
 		Borrar.setBounds(302, 412, 89, 23);
 		panel_2.add(Borrar);
+		
+		JLabel lblNewLabel_4_1_2 = new JLabel("DNI:");
+		lblNewLabel_4_1_2.setBounds(176, 82, 50, 14);
+		panel_2.add(lblNewLabel_4_1_2);
+		
+		Tdni = new JTextField();
+		Tdni.setColumns(10);
+		Tdni.setBounds(205, 79, 152, 20);
+		panel_2.add(Tdni);
+		
+		JButton Buscar1_4 = new JButton("Buscar");
+		Buscar1_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String x = Tdni.getText();
+				txtrHola_1.setText("");
+				
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection aajcon = DriverManager.getConnection
+							("jdbc:mysql://localhost:3306/compras","root","");
+					
+					String sql = "Select * from empleados where dni = " + "'"+ x +"'" + ";";
+					Statement stm = aajcon.createStatement();
+					ResultSet rs = stm.executeQuery(sql);
+					
+					
+					while(rs.next()) {
+						String nom = rs.getString(1);
+						String DNI = rs.getString(2);
+						String Apellido = rs.getString(3);
+						String Dpto = rs.getString(4);
+						int tlf = rs.getInt(5);
+					 txtrHola_1.append(nom + "\t" + DNI + "\t" +  Apellido+ "\t" + Dpto + "\t" + tlf + "" + "\n");
+						
+					}
+					
+					
+					
+					aajcon.close();
+					
+				}catch(Exception e9) {
+					System.out.println(e9);
+				}	
+			}
+		});
+		Buscar1_4.setBounds(367, 78, 89, 23);
+		panel_2.add(Buscar1_4);
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -858,6 +906,4 @@ public class MenuP {
 		
 		
 	}
-	
-
 }

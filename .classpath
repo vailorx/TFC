@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="var" path="JRE_LIB" sourcepath="JRE_SRC"/>
+	<classpathentry kind="src" path="TFC/src"/>
+	<classpathentry kind="lib" path="TFC/jgoodies-common-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="TFC/jgoodies-common-1.8.0.jar"/>
+	<classpathentry kind="lib" path="TFC/jgoodies-forms-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="TFC/jgoodies-forms-1.8.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alumno21-22/Downloads/mysql-connector-java-8.0.28.jar"/>
+	<classpathentry kind="output" path="TFC/bin"/>
+</classpath>
